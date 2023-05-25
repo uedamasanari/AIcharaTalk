@@ -1,16 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import '@/styles/globals.css'
+import type { AppProps } from 'next/app'
 
-import IndexPage from './pages/index';
-import reducer from './reducers';
-
-const store = createStore(reducer);
-
-ReactDOM.render(
-  <Provider store={store}>
-    <IndexPage />
-  </Provider>,
-  document.getElementById('root')
-);
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}
