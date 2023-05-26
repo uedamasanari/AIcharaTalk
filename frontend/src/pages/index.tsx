@@ -1,4 +1,4 @@
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/Home.module.scss'
 import Image from "next/image";
 import { useAtom } from 'jotai';
 import { nowBgimg } from '@/atom/bgimg';
@@ -12,7 +12,6 @@ export default function Home() {
         alt=""
         width={200}
         height={50}
-        className={`${styles.arrival}`}
     />
     </div>
   )
