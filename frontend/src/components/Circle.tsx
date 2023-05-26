@@ -33,6 +33,7 @@ const CircleDiv = styled.div<Props>`
   }
 `
 
+
 const Circle: React.FC<Props> = ({
   width,
   height,

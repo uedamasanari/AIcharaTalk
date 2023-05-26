@@ -51,33 +51,33 @@ export default function Home() {
         height={50}
         className={styles.guraBig}
       />
-      <div className={styles.topArea}>
-        <div className={styles.topLeftArea}>
-          <div className={styles.icon}>
-            <Image
-              width={85}
-              height={85}
-              src="/gura.svg"
-              alt="guraの画像"
-              className={styles.iconImage}
-            />
-          </div>
-          <div className={styles.nameObj}>
-            <p className={styles.nameText}>ぐら</p>
-          </div>
-        </div>
-          <div className={styles.tokenObj}>
-            <Image src="/token.svg" alt="tokenの画像" width={60} height={60} />
-            <p className={styles.tokenText}>50</p>
-            <Image
-              src="/tokenPlus.svg"
-              alt="tokenの画像"
-              width={35}
-              height={35}
-            />
-          </div>
+      <div className={styles.icon}>
+        <Circle
+          width={85}
+          height={85}
+          path="/gura.svg"
+          alt="guraの画像"
+          imgHeight={70}
+          imgWidth={70}
+        />
       </div>
-
+      <div className={styles.nameArea}>
+        <div className={styles.nameObj}>
+          <p className={styles.nameText}>ぐら</p>
+        </div>
+      </div>
+      <div className={styles.tokenArea}>
+        <div className={styles.tokenObj}>
+          <Image src="/token.svg" alt="tokenの画像" width={35} height={35} />
+          <p className={styles.tokenText}>50</p>
+          <Image
+            src="/tokenPlus.svg"
+            alt="tokenの画像"
+            width={15}
+            height={15}
+          />
+        </div>
+      </div>
       <div className={styles.changeArea}>
         <Circle
           width={48}
