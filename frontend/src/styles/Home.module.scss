@@ -1,167 +1,254 @@
 $shadowColor: rgba(0, 0, 0, 0.25);
 $bgc: #ffffff;
 @mixin button($width: 48px, $height: 48px) {
-    width: $width;
-    height: $height;
-    background: #ffffff;
-    box-shadow: 0px 3px 8px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  width: $width;
+  height: $height;
+  background: #ffffff;
+  box-shadow: 0px 3px 8px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-// .grid {
-//   display: grid;
-//   grid-template-columns: 20vw 50vw 15vw 15vw;
-//   grid-template-rows: 15vh 1.3vh 37.4vh 28.3vh 8.6vh 8.9vh 0.5vh;
-//   .guraBig {
-//     grid-row: 1/5;
-//     grid-column: 1/8;
-//     position: absolute;
-//     top: 10vh;
-//     left: 10vw;
-//     width: 80vw;
-//     height: 80vh;
-//   }
-//   .icon {
-//     grid-row: 1/2;
-//     grid-column: 1/2;
-//     z-index: 2;
-//   }
-//   .nameArea {
-//     grid-row: 1/2;
-//     grid-column: 1/3;
-//     .nameObj {
-//       position: relative;
-//       margin-top: 20px;
-//       width: 230px;
-//       height: 47px;
-//       background: $bgc;
-//       box-shadow: 0px 4px 4px $shadowColor;
-//       border-radius: 150px;
-//       .nameText {
-//         position: absolute;
-//         margin: 0px;
-//         top: 12px;
-//         left: 24vw;
-//         width: 26vw;
-//         font-family: 'Inter';
-//         font-style: normal;
-//         font-weight: 700;
-//         font-size: 20px;
-//         line-height: 24px;
-//         color: #f45d34;
-//       }
-//     }
-//   }
-//   .tokenArea {
-//     grid-row: 1/2;
-//     grid-column: 3/5;
-//     display: flex;
-//     justify-content: right;
-//     .tokenObj {
-//       display: flex;
-//       align-items: center;
-//       justify-content: space-around;
-//       margin-top: 20px;
-//       width: 114px;
-//       height: 47px;
-//       background: $bgc;
-//       box-shadow: 0px 4px 4px $shadowColor;
-//       border-radius: 150px 0px 0px 150px;
-//       .tokenText {
-//         font-family: 'Inter';
-//         font-style: normal;
-//         font-weight: 700;
-//         font-size: 20px;
-//         line-height: 24px;
-//         color: #f45d34;
-//       }
-//     }
-//   }
-//   .changeArea {
-//     grid-row: 3/4;
-//     grid-column: 1/2;
-//     padding-left: 3vw;
-//   }
-//   .menuButtonFlex {
-//     grid-row: 3/4;
-//     grid-column: 4/5;
-//     display: flex;
-//     flex-direction: column;
-//     gap: 2.25vh;
-//   }
-//   .bottomArea {
-//     grid-row: 5/7;
-//     grid-column: 1/5;
-//     display: flex;
-//     flex-direction: column;
-//     gap: 2.25vh;
-//     .logArea {
-//       display: flex;
-//       justify-content: center;
-//       gap: 6vw;
-//       .dummyArea {
-//         width: 76.67vw;
-//         height: 48px;
-//       }
-//     }
-//     .inputTextArea {
-//       grid-row: 6/7;
-//       grid-column: 1/5;
-//       display: flex;
-//       justify-content: center;
-//       gap: 5vw;
-//       .inputTextObj {
-//         width: 76.67vw;
-//         height: 48px;
-//         background: $bgc;
-//         box-shadow: 0px 3px 8px 2px $shadowColor;
-//         border-radius: 40px;
-//         border: none;
-//       }
-//     }
-//   }
+@mixin buttonImage($width: 48px, $height: 48px) {
+  width: $width;
+  height: $height;
+}
 
-//   @media (min-width: 768px) {
-//     grid-template-columns: 1fr 1fr;
-//     grid-template-rows: 1fr;
-//     grid-template-areas: 'nameArea tokenArea' 'inputTextArea inputTextArea';
-//   }
+@media (max-width: 1023px) {
+    $nomalImageTimes: 0.6;
+    .grid {
+      .guraBig {
+        position: fixed;
+        top: 10vh;
+        left: 10vw;
+        width: 80vw;
+        height: 80vh;
+        z-index: -1;
+      }
+  
+      .topArea {
+        display: flex;
+  
+        .topLeftArea {
+          width: 100vw;
+          height: 86px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          .icon {
+            position: absolute;
+            z-index: 2;
+            @include button($width: 85px, $height: 85px);
+            .iconImage {
+              width: 65px;
+              height: 65px;
+            }
+          }
+          .nameObj {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            width: 160px;
+            height: 47px;
+            left: 70px;
+            background: $bgc;
+            box-shadow: 0px 4px 4px $shadowColor;
+            border-radius: 0px 150px 150px 0px;
+            .nameText {
+              right: 0px;
+              width: 100%;
+              font-family: 'Inter';
+              font-style: normal;
+              font-weight: 700;
+              font-size: 20px;
+              line-height: 24px;
+              color: #f45d34;
+              text-align: center;
+            }
+          }
+  
+          .tokenObj {
+            position:absolute;
+            right:0px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin-left: 250px;
+            width: 114px;
+            height: 47px;
+            background: $bgc;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 150px 0px 0px 150px;
+            .tokenImage{
+                width: 32px;
+                height: 25px;
+            }
+            .tokenText {
+              font-family: 'Inter';
+              font-style: normal;
+              font-weight: 700;
+              font-size: 20px;
+              line-height: 44px;
+              text-align: right;
+              color: #f45d34;
+            }
+            .tokenPlusImage{
+                width: 20px;
+                height: 20px;
+            }
+          }
+        }
+      }
+      .menuButtonFlex {
+        position:absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 0px;
+        width: 11vw;
+        gap: 3vh;
+        padding-top: 13vh;
+        right:15px;
+        .settingArea {
+          @include button($width: 48px, $height: 48px);
+          .settingImage {
+            @include buttonImage(
+              $width: 48px * $nomalImageTimes,
+              $height: 48px * $nomalImageTimes
+            );
+          }
+        }
+        .noticeArea {
+          @include button($width: 48px, $height: 48px);
+          .noticeImage {
+            @include buttonImage(
+              $width: 48px * $nomalImageTimes,
+              $height: 48px * $nomalImageTimes
+            );
+          }
+        }
+        .youtubeArea {
+          @include button($width: 48px, $height: 48px);
+          .youtubeImage {
+            @include buttonImage(
+              $width: 48px * $nomalImageTimes,
+              $height: 48px * $nomalImageTimes
+            );
+          }
+        }
+        .voteArea {
+          @include button($width: 48px, $height: 48px);
+          .voteImage {
+            @include buttonImage(
+              $width: 48px * $nomalImageTimes,
+              $height: 48px * $nomalImageTimes
+            );
+          }
+        }
+        .shopArea {
+          @include button($width: 48px, $height: 48px);
+          .shopImage {
+            @include buttonImage(
+              $width: 48px * $nomalImageTimes,
+              $height: 48px * $nomalImageTimes
+            );
+          }
+        }
+      }
+      .bottomArea {
+          margin-top:80vh;
+        .changeArea {
+            position: absolute;
+            left:10px;
+            top:13vh;
+          @include button($width: 48px, $height: 48px);
+          .changeImage {
+            @include buttonImage($width: 40px, $height: 40px);
+          }
+        }
+        .inputTextArea{
+            position: absolute;
+            bottom:40px;
+            left:15px;
+          background: #FFFFFF;
+          box-shadow: 0px 3px 8px 2px rgba(0, 0, 0, 0.25);
+          border-radius: 98px;
+          width: 76vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .inputTextObj {
+              width: 50vw;
+              height: 48px;
+              border: none;
+          }
+        }
+        .logArea {
+            position:absolute;
+            right:15px;
+            bottom:105px;
+          @include button($width: 48px, $height: 48px);
+          .logImage {
+            @include buttonImage(
+              $width: 48px * $nomalImageTimes,
+              $height: 48px * $nomalImageTimes
+            );
+          }
+        }
+        .voiceArea {
+            position:absolute;
+            right:15px;
+            bottom:40px;
+          @include button($width: 48px, $height: 48px);
+          .voiceImage {
+            @include buttonImage(
+              $width: 48px * $nomalImageTimes,
+              $height: 48px * $nomalImageTimes
+            );
+          }
+        }
+      }
+    }
+}
 
 @media (min-width: 1024px) {
+  $nomalImageTimes: 1.1;
   .grid {
     .guraBig {
       position: fixed;
-      top: 10vh;
+      top: 0vh;
       left: 10vw;
       width: 80vw;
       height: 80vh;
+      z-index: -1;
     }
 
     .topArea {
+      display: flex;
+
       .topLeftArea {
-        width: 30vw;
+        width: 89vw;
         height: 161.5px;
         position: relative;
         display: flex;
         align-items: center;
         .icon {
-            position: absolute;
-            z-index: 2;
-            @include button($width: 85px, $height:85px);
-            .iconImage{
-                width: 85px;
-                height: 85px;
+          position: absolute;
+          z-index: 2;
+          @include button($width: 85px, $height: 85px);
+          .iconImage {
+            width: 85px;
+            height: 85px;
+          }
+          @media (min-width: 1024px) {
+            @include button($width: 85px * 1.9, $height: 85px * 1.9);
+            .iconImage {
+              width: 85px * 1.5;
+              height: 85px * 1.5;
             }
-            @media (min-width: 1024px) {
-                @include button($width: 85px * 1.9, $height: 85px * 1.9);
-                .iconImage{
-                    width: 85px * 1.5;
-                    height: 85px * 1.5;
-                }
-            }
+          }
         }
         .nameObj {
           position: absolute;
@@ -185,29 +272,127 @@ $bgc: #ffffff;
             text-align: center;
           }
         }
+
+        .tokenObj {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          margin-top: 300px;
+          width: 253px;
+          height: 87px;
+          background: $bgc;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 0px 150px 150px 0px;
+
+          .tokenText {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 36px;
+            line-height: 44px;
+            text-align: right;
+            color: #f45d34;
+          }
+        }
       }
-      .tokenObj {
+    }
+    .menuButtonFlex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 0px;
+      width: 11vw;
+      gap: 5vh;
+      padding-top: 5vh;
+      .settingArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .settingImage {
+          @include buttonImage(
+            $width: 48px * $nomalImageTimes,
+            $height: 48px * $nomalImageTimes
+          );
+        }
+      }
+      .noticeArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .noticeImage {
+          @include buttonImage(
+            $width: 48px * $nomalImageTimes,
+            $height: 48px * $nomalImageTimes
+          );
+        }
+      }
+      .youtubeArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .youtubeImage {
+          @include buttonImage(
+            $width: 48px * $nomalImageTimes,
+            $height: 48px * $nomalImageTimes
+          );
+        }
+      }
+      .voteArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .voteImage {
+          @include buttonImage(
+            $width: 48px * $nomalImageTimes,
+            $height: 48px * $nomalImageTimes
+          );
+        }
+      }
+      .shopArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .shopImage {
+          @include buttonImage(
+            $width: 48px * $nomalImageTimes,
+            $height: 48px * $nomalImageTimes
+          );
+        }
+      }
+    }
+    .bottomArea {
+        display: flex;
+        justify-content: space-around;
+        margin-top:17vh;
+      .changeArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .changeImage {
+          @include buttonImage($width: 48px * 1.5, $height: 48px * 1.5);
+        }
+      }
+      .inputTextArea{
+        background: #FFFFFF;
+        box-shadow: 0px 3px 8px 2px rgba(0, 0, 0, 0.25);
+        border-radius: 98px;
+        width: 63.2vw;
         display: flex;
         align-items: center;
-        justify-content: space-around;
-        margin-top: 20px;
-        width: 253px;
-        height: 87px;
-        background: $bgc;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 0px 150px 150px 0px;
-
-        .tokenText {
-          font-family: 'Inter';
-          font-style: normal;
-          font-weight: 700;
-          font-size: 36px;
-          line-height: 44px;
-          text-align: right;
-          color: #f45d34;
+        justify-content: center;
+        .inputTextObj {
+            width: 50vw;
+            height: 80px;
+            border: none;
+        }
+      }
+      .logArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .logImage {
+          @include buttonImage(
+            $width: 48px * $nomalImageTimes,
+            $height: 48px * $nomalImageTimes
+          );
+        }
+      }
+      .voiceArea {
+        @include button($width: 48px * 1.9, $height: 48px * 1.9);
+        .voiceImage {
+          @include buttonImage(
+            $width: 48px * $nomalImageTimes,
+            $height: 48px * $nomalImageTimes
+          );
         }
       }
     }
   }
 }
-// }
+
