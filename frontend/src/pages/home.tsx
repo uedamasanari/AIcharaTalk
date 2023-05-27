@@ -9,35 +9,40 @@ export default function Home() {
     {
       path: '/button/setting.svg',
       name: 'setting',
-      class: 'setting',
+      wrapClass: 'settingArea',
+      imageClass: 'settingImage',
       rowGrid: '1/2',
       columnGrid: '1/2',
     },
     {
       path: '/button/notice.svg',
       name: 'notice',
-      class: 'notice',
+      wrapClass: 'noticeArea',
+      imageClass: 'noticeImage',
       rowGrid: '1/2',
       columnGrid: '1/2',
     },
     {
       path: '/button/youtube.svg',
       name: 'youtube',
-      class: 'youtube',
+      wrapClass: 'youtubeArea',
+      imageClass: 'youtubeImage',
       rowGrid: '1/2',
       columnGrid: '1/2',
     },
     {
       path: '/button/vote.svg',
       name: 'vote',
-      class: 'vote',
+      wrapClass: 'voteArea',
+      imageClass: 'voteImage',
       rowGrid: '1/2',
       columnGrid: '1/2',
     },
     {
       path: '/button/shop.svg',
       name: 'shop',
-      class: 'shop',
+      wrapClass: 'shopArea',
+      imageClass: 'shopImage',
       rowGrid: '1/2',
       columnGrid: '1/2',
     },
@@ -65,59 +70,64 @@ export default function Home() {
           <div className={styles.nameObj}>
             <p className={styles.nameText}>ぐら</p>
           </div>
-        </div>
           <div className={styles.tokenObj}>
-            <Image src="/token.svg" alt="tokenの画像" width={60} height={60} />
+            <Image src="/token.svg" alt="tokenの画像" width={60} height={60} className={styles.tokenImage}/>
             <p className={styles.tokenText}>50</p>
             <Image
               src="/tokenPlus.svg"
               alt="tokenの画像"
               width={35}
               height={35}
+                className={styles.tokenPlusImage}
             />
           </div>
+        </div>
+
+        <div className={styles.menuButtonFlex}>
+          {images.map((image, index) => (
+            <div className={styles[image.wrapClass]} key={index}>
+              <Image
+                width={98}
+                height={98}
+                src={image.path}
+                alt={`${image.name}の画像`}
+                className={styles[image.imageClass]}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className={styles.changeArea}>
-        <Circle
-          width={48}
-          height={48}
-          path="/button/change.svg"
-          alt="changeの画像"
-          imgHeight={35}
-          imgWidth={35}
-        />
-      </div>
-      <div className={styles.menuButtonFlex}>
-        {images.map((image, index) => (
-          <div className={styles[image.class]} key={index}>
-            <Circle
-              width={48}
-              height={48}
-              path={image.path}
-              alt={`${image.name}の画像`}
-            />
-          </div>
-        ))}
-      </div>
       <div className={styles.bottomArea}>
-        <div className={styles.logArea}>
-          <div className={styles.dummyArea} />
-          <Circle
-            width={48}
-            height={48}
-            path="/button/log.svg"
-            alt="logの画像"
+        <div className={styles.changeArea}>
+          <Image
+            width={98}
+            height={98}
+            src="/button/change.svg"
+            alt="changeの画像"
+            className={styles.changeImage}
           />
         </div>
         <div className={styles.inputTextArea}>
           <input type="text" className={styles.inputTextObj} />
-          <Circle
+        </div>
+        <div className={styles.voiceArea}>
+          <Image
             width={48}
             height={48}
-            path="/button/voice.svg"
+            src="/button/voice.svg"
             alt="voiceの画像"
+            className={styles.voiceImage}
           />
+        </div>
+        <div className={styles.logArea}>
+            <Image
+              width={48}
+              height={48}
+              src="/button/log.svg"
+              alt="logの画像"
+              className={styles.logImage}
+            />
         </div>
       </div>
     </div>
