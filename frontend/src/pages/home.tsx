@@ -1,10 +1,60 @@
 import styles from '@/styles/Home.module.scss'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { nowBgimg } from '@/atom/bgimg'
 import Circle from '@/components/Circle'
 
+// const SpeechRecognition =
+//   (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+
+// const SpeechRecognitionEvent =
+//   (window as any).SpeechRecognitionEvent ||
+//   (window as any).webkitSpeechRecognitionEvent
+
 export default function Home() {
+  const [recognition, setRecognition] = useState<any>(null)
+  const [transcript, setTranscript] = useState<string>('')
+  const [isVoice, setIsVoice] = useState<boolean>(false)
+
+  useEffect(() => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition
+
+    if (!SpeechRecognition) {
+      console.log(
+        "Your browser doesn't support speech recognition software, try Chrome."
+      )
+    } else {
+      const recognitionObj = new SpeechRecognition()
+      recognitionObj.continuous = true
+      recognitionObj.interimResults = true
+
+      recognitionObj.onresult = (event: any) => {
+        let tempTranscript = ''
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          tempTranscript += event.results[i][0].transcript
+        }
+        setTranscript(tempTranscript)
+      }
+
+      setRecognition(recognitionObj)
+    }
+  }, [])
+
+  const startListening = () => {
+    recognition.start()
+    setIsVoice(true)
+    console.log('start')
+  }
+
+  const stopListening = () => {
+    recognition.stop()
+    setIsVoice(false)
+    console.log(transcript)
+  }
+
   const images = [
     {
       path: '/button/setting.svg',
@@ -56,6 +106,19 @@ export default function Home() {
         height={50}
         className={styles.guraBig}
       />
+      {isVoice === true ? (
+        <>
+          <div className={styles.voiceModal}>
+            <div className={styles.text}>音声入力</div>
+            <Image className={styles.mic} src="/home/mic.svg" alt="" width={48} height={48} />
+            <Image className={styles.stop} src="/home/stop.svg" alt="" width={48} height={48} onClick={stopListening}/>
+          </div>
+          <div className={styles.modalBG} />
+        </>
+      ) : (
+        <>
+        </>
+      )}
       <div className={styles.topArea}>
         <div className={styles.topLeftArea}>
           <div className={styles.icon}>
@@ -71,14 +134,20 @@ export default function Home() {
             <p className={styles.nameText}>ぐら</p>
           </div>
           <div className={styles.tokenObj}>
-            <Image src="/token.svg" alt="tokenの画像" width={60} height={60} className={styles.tokenImage}/>
+            <Image
+              src="/token.svg"
+              alt="tokenの画像"
+              width={60}
+              height={60}
+              className={styles.tokenImage}
+            />
             <p className={styles.tokenText}>50</p>
             <Image
               src="/tokenPlus.svg"
               alt="tokenの画像"
               width={35}
               height={35}
-                className={styles.tokenPlusImage}
+              className={styles.tokenPlusImage}
             />
           </div>
         </div>
@@ -112,22 +181,33 @@ export default function Home() {
           <input type="text" className={styles.inputTextObj} />
         </div>
         <div className={styles.voiceArea}>
-          <Image
+          {isVoice === false ? (
+            <Image
             width={48}
             height={48}
             src="/button/voice.svg"
             alt="voiceの画像"
             className={styles.voiceImage}
+            onClick={startListening}
           />
-        </div>
-        <div className={styles.logArea}>
+          ) : (
             <Image
               width={48}
               height={48}
-              src="/button/log.svg"
-              alt="logの画像"
-              className={styles.logImage}
+              src="/button/voice.svg"
+              alt="voiceの画像"
+              className={styles.voiceImage}
             />
+          )}
+        </div>
+        <div className={styles.logArea}>
+          <Image
+            width={48}
+            height={48}
+            src="/button/log.svg"
+            alt="logの画像"
+            className={styles.logImage}
+          />
         </div>
       </div>
     </div>
