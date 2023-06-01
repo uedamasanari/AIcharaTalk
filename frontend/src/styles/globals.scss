@@ -2,6 +2,10 @@ body{
   margin:0px;
   padding:0px;
   // background-image: url("/bgimg.svg");
-  background-image: url("/pcbgimg.svg");
-  background-size: 100vw 100vh;
+  // background-image: url("/pcbgimg.svg");
+  background-image: url("/backgroundImage.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-attachment: fixed;
+  background-size: cover;
 }
