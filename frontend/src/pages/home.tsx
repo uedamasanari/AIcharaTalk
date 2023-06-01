@@ -1,21 +1,41 @@
 import styles from '@/styles/Home.module.scss'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import axios from 'axios'
 import { useAtom } from 'jotai'
 import { nowBgimg } from '@/atom/bgimg'
 import Circle from '@/components/Circle'
 
-// const SpeechRecognition =
-//   (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-
-// const SpeechRecognitionEvent =
-//   (window as any).SpeechRecognitionEvent ||
-//   (window as any).webkitSpeechRecognitionEvent
-
 export default function Home() {
+  const [nowImg, setNowImg] = useState<string>("/demo/bijyo-normal.png")
   const [recognition, setRecognition] = useState<any>(null)
   const [transcript, setTranscript] = useState<string>('')
   const [isVoice, setIsVoice] = useState<boolean>(false)
+  const [inputText, setInputText] = useState<string>('')
+  const [isHukidashi, setIsHukidashi] = useState<number>(0)
+  const [hukidashiText, setHukidashiText] = useState<string>('')
+
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+
+        const resizeTextarea = () => {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight - 30}px`;
+        };
+
+        resizeTextarea();
+        textarea.addEventListener('input', resizeTextarea);
+
+        // cleanup function
+        return () => {
+            if (textarea) {
+                textarea.removeEventListener('input', resizeTextarea);
+            }
+        };
+    }, []);
 
   useEffect(() => {
     const SpeechRecognition =
@@ -53,6 +73,57 @@ export default function Home() {
     recognition.stop()
     setIsVoice(false)
     console.log(transcript)
+    setHukidashiText(transcript)
+    setIsHukidashi(1)
+    setTimeout(() => {
+      playAudio();
+      setNowImg("/demo/bijyo-smile.png")
+    }, 2000);
+  }
+
+    const playAudio = () => {
+      const text = "お疲れ様！一日頑張って偉いね！私もいつも君の頑張りを応援しているよ。どんなことがあったの？";
+      let index = 0;
+  
+      const intervalId = setInterval(() => {
+        setHukidashiText(text.slice(0, index));
+        index += 1;
+  
+        if (index > text.length) {
+          clearInterval(intervalId);
+        }
+      }, 50); // change this to the time you want
+  
+      setIsHukidashi(2)
+      const audioContext = new AudioContext();
+      const audioElement = new Audio('/audio/demo.wav');
+      const audioSource = audioContext.createMediaElementSource(audioElement);
+      audioSource.connect(audioContext.destination);
+      audioElement.play();
+      setTimeout(() => {
+        setHukidashiText("")
+        setIsHukidashi(0)
+      }, 8300);
+    };
+
+  const postText = () => {
+    setHukidashiText(inputText)
+    setIsHukidashi(1)
+    setTimeout(() => {
+      playAudio();
+      setNowImg("/demo/bijyo-smile.png")
+    }, 2000);
+    // axios
+    //   .post('http://localhost:3000/api/voice', {
+    //     text: transcript,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data)
+    //     setInputText(res.data)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   }
 
   const images = [
@@ -100,12 +171,39 @@ export default function Home() {
   return (
     <div className={styles.grid}>
       <Image
-        src="/guraBig.svg"
+        src={nowImg}
         alt=""
         width={200}
         height={50}
         className={styles.guraBig}
       />
+      {isHukidashi === 1 ? (
+        <>
+          <div className={styles.hukidashiArea}>
+          </div>
+          <Image
+            src="/home/hukidashiBottom.svg"
+            alt=""
+            width={100}
+            height={50}
+            className={styles.hukidashiBottomSankaku}
+          />
+          <div className={styles.hukidashiText}>{hukidashiText}</div>
+        </>
+      ) : isHukidashi === 2 ? (
+        <>
+          <div className={styles.hukidashiArea}>
+          </div>
+          <Image
+            src="/home/hukidashiUp.svg"
+            alt=""
+            width={200}
+            height={50}
+            className={styles.hukidashiTopSankaku}
+          />
+          <div className={styles.hukidashiText}>{hukidashiText}</div>
+        </>
+      ): null}
       {isVoice === true ? (
         <>
           <div className={styles.voiceModal}>
@@ -125,13 +223,13 @@ export default function Home() {
             <Image
               width={85}
               height={85}
-              src="/gura.svg"
-              alt="guraの画像"
+              src="/icon/bijyo.png"
+              alt="bijyoの画像"
               className={styles.iconImage}
             />
           </div>
           <div className={styles.nameObj}>
-            <p className={styles.nameText}>ぐら</p>
+            <p className={styles.nameText}>アリアル</p>
           </div>
           <div className={styles.tokenObj}>
             <Image
@@ -177,19 +275,40 @@ export default function Home() {
             className={styles.changeImage}
           />
         </div>
-        <div className={styles.inputTextArea}>
-          <input type="text" className={styles.inputTextObj} />
+        <div className={styles.textarea}>
+          <div className={styles.inputTextArea}>
+            <Image
+              width={98}
+              height={98}
+              src="/home/chat.svg"
+              alt="chatの画像"
+              className={styles.chatImage}
+            />
+            <textarea ref={textareaRef} value={inputText} className={styles.inputTextObj} onChange={(e)=>setInputText(e.target.value)}/>
+          </div>
         </div>
         <div className={styles.voiceArea}>
           {isVoice === false ? (
-            <Image
-            width={48}
-            height={48}
-            src="/button/voice.svg"
-            alt="voiceの画像"
-            className={styles.voiceImage}
-            onClick={startListening}
-          />
+            inputText.length === 0 ?  (
+              <Image
+                width={48}
+                height={48}
+                src="/button/voice.svg"
+                alt="voiceの画像"
+                className={styles.voiceImage}
+                onClick={startListening}
+              />
+            ) : (
+              <Image
+                width={48}
+                height={48}
+                src="/post.svg"
+                alt="postの画像"
+                className={styles.postImage}
+                onClick={postText}
+              />
+            )
+              
           ) : (
             <Image
               width={48}
